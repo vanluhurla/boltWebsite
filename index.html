@@ -428,7 +428,39 @@
   .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
   @media (max-width: 768px) {
+    /* NAV */
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .nav-cta { padding: 8px 16px; font-size: 11px; }
+
+    /* HERO */
+    .hero-content { padding: 0 24px; max-width: 100%; }
+    .hero-sub { font-size: 14px; }
+    .hero-actions { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 14px 20px; }
+    .scroll-line { display: none; }
+
+    /* SERVICES */
+    .services { padding: 64px 24px; }
     .services-grid { grid-template-columns: 1fr; }
+    .service-card { padding: 32px 24px; }
+
+    /* ABOUT */
+    .about { grid-template-columns: 1fr; gap: 40px; padding: 64px 24px; }
+    .about-accent { bottom: -12px; left: -12px; width: 90px; height: 90px; }
+
+    /* CRAFT STRIP */
+    .craft-strip { flex-direction: column; gap: 24px; padding: 48px 24px; text-align: center; }
+    .craft-divider { width: 60px; height: 2px; }
+
+    /* CTA */
+    .cta { padding: 80px 24px; }
+    .cta-buttons { flex-direction: column; gap: 12px; width: 100%; }
+    .cta-buttons .btn-primary, .cta-buttons .btn-outline { width: 100%; text-align: center; }
+
+    /* FOOTER */
+    footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
   }
 </style>
 </head>
