@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About – Bolt Boards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: rgb(112, 77, 241);
+    --gold: #ffdf0f;
+    --white: #ffffff;
+    --off-white: #f5f5f3;
+    --dark: #0a0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; background: var(--off-white); color: var(--dark); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 68px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,223,15,0.15);
+  }
+  .nav-logo img { height: 44px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--purple); color: #fff;
+    border: none; padding: 10px 24px; cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: background 0.2s;
+    display: inline-block; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--dark); }
+
+  /* PAGE HERO */
+  .about-hero {
+    padding: 140px 48px 80px;
+    background: var(--dark);
+    text-align: center;
+  }
+  .about-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14pt; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .about-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 2px; background: var(--gold);
+  }
+  .about-hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(48px, 7vw, 90px);
+    line-height: 0.95; color: var(--white); margin-bottom: 20px;
+  }
+  .about-hero-title span { color: var(--purple); }
+  .about-hero-sub {
+    font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.5);
+    max-width: 480px; margin: 0 auto; line-height: 1.75;
+  }
+
+  /* MAIN CONTENT */
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    padding: 100px 48px;
+    align-items: center;
+  }
+
+  /* IMAGE */
+  .about-image-wrap {
+    position: relative;
+  }
+  .about-image-box {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #dddbd8;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .about-image-box::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(112,77,241,0.1), transparent);
+  }
+  .about-image-box img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .about-image-placeholder {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(10,10,10,0.25);
+  }
+  .about-image-accent {
+    position: absolute; bottom: -16px; right: -16px;
+    background: var(--purple); color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 12px 20px;
+  }
+
+  /* TEXT */
+  .about-text-wrap .section-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14pt; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--purple); margin-bottom: 18px;
+  }
+  .about-text-wrap .section-tag::before {
+    content: ''; width: 24px; height: 2px; background: var(--purple);
+  }
+  .about-text-wrap h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(36px, 4vw, 56px);
+    line-height: 1; margin-bottom: 24px;
+  }
+  .about-text-wrap p {
+    font-size: 15px; font-weight: 300; line-height: 1.85;
+    color: rgba(10,10,10,0.65); margin-bottom: 20px;
+  }
+  .about-text-wrap p:last-of-type { margin-bottom: 36px; }
+  .about-list {
+    list-style: none; display: flex; flex-direction: column; gap: 12px;
+    margin-bottom: 40px;
+  }
+  .about-list li {
+    font-size: 14px; font-weight: 400; color: rgba(10,10,10,0.7);
+    padding-left: 20px; position: relative; line-height: 1.6;
+  }
+  .about-list li::before {
+    content: ''; position: absolute; left: 0; top: 9px;
+    width: 8px; height: 2px; background: var(--purple);
+  }
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--purple); color: #fff;
+    padding: 14px 32px; text-decoration: none; display: inline-block;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #8a63f5; transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,223,15,0.1);
+  }
+  .footer-logo img { height: 36px; width: auto; opacity: 0.8; }
+  .footer-links { display: flex; gap: 28px; list-style: none; }
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .about-hero { padding: 120px 20px 60px; }
+    .about-content { grid-template-columns: 1fr; gap: 48px; padding: 60px 20px; }
+    .about-image-accent { right: 0; }
+    footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="bolt_logo.png" alt="Bolt Boards"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+</nav>
+
+<!-- HERO -->
+<div class="about-hero">
+  <div class="about-eyebrow">Who We Are</div>
+  <h1 class="about-hero-title">Built on<br><span>passion.</span></h1>
+  <p class="about-hero-sub">A UK-based studio crafting pedalboards, wiring setups, and custom cables for musicians who refuse to compromise.</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<section class="about-content">
+
+  <!-- LEFT: IMAGE -->
+  <div class="about-image-wrap">
+    <div class="about-image-box">
+      <!-- Replace the placeholder below with an <img> tag when you have a photo -->
+      <span class="about-image-placeholder">Image coming soon</span>
+    </div>
+    <div class="about-image-accent">UK Based Studio</div>
+  </div>
+
+  <!-- RIGHT: TEXT -->
+  <div class="about-text-wrap">
+    <div class="section-tag">Our Story</div>
+    <h2>Craftsmanship<br>meets passion.</h2>
+    <p>We've been building top-notch pedalboards and wiring setups for musicians all over Europe for over a decade. Our dedication to the craft and love for music drives everything we do.</p>
+    <p>Every board that leaves our workshop is handcrafted from start to finish — no assembly lines, no shortcuts. We work closely with each musician to understand their signal chain, their stage, and their sound.</p>
+    <ul class="about-list">
+      <li>Every board is handcrafted start to finish — no assembly lines, no shortcuts.</li>
+      <li>We work closely with each musician to understand their signal chain and stage requirements.</li>
+      <li>Built in the UK, shipped to musicians across Europe.</li>
+      <li>Over a decade of experience in custom pedalboard builds.</li>
+    </ul>
+    <a href="contact.html" class="btn-primary">Work With Us</a>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <a href="index.html"><img src="bolt_logo.png" alt="Bolt Boards"></a>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-copy">&copy; 2026 Bolt Boards. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
