@@ -91,7 +91,7 @@
     position: relative;
   }
   .about-image-box {
-    width: 100%;
+    width: 80%;
     aspect-ratio: 3/4;
     background: #dddbd8;
     display: flex; align-items: center; justify-content: center;
@@ -150,7 +150,7 @@
   }
   .about-list li::before {
     content: ''; position: absolute; left: 0; top: 9px;
-    width: 8px; height: 2px; background: var(--purple);
+    width: 8px; height: 2px; background: var(--gold);
   }
   .btn-primary {
     font-family: 'Barlow Condensed', sans-serif;
@@ -162,6 +162,51 @@
     transition: background 0.2s, transform 0.2s;
   }
   .btn-primary:hover { background: #8a63f5; transform: translateY(-2px); }
+
+  /* VALUES STRIP */
+  .values-strip {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: grid; grid-template-columns: repeat(3, 1fr);
+  }
+  .value-item {
+    padding: 56px 48px;
+    border-right: 1px solid rgba(255,255,255,0.07);
+  }
+  .value-item:last-child { border-right: none; }
+  .value-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 56px; font-weight: 900;
+    color: var(--gold); line-height: 1; margin-bottom: 8px;
+  }
+  .value-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .value-desc {
+    font-size: 13px; font-weight: 300;
+    color: rgba(255,255,255,0.35); line-height: 1.7;
+  }
+
+  /* CTA BAND */
+  .about-cta {
+    border-top: 3px solid var(--purple);
+    background: rgba(112,77,241,0.06);
+    padding: 80px 48px;
+    display: flex; align-items: center; justify-content: space-between; gap: 48px;
+  }
+  .about-cta-text h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(32px, 4vw, 52px);
+    text-transform: uppercase; color: var(--white); line-height: 1;
+    margin-bottom: 10px;
+  }
+  .about-cta-text h3 span { color: var(--gold); }
+  .about-cta-text p {
+    font-size: 14px; font-weight: 300;
+    color: rgba(255,255,255,0.4); max-width: 400px; line-height: 1.7;
+  }
 
   /* FOOTER */
   footer {
@@ -186,7 +231,11 @@
     .nav-links a { font-size: 11px; }
     
     .about-content { grid-template-columns: 1fr; gap: 48px; padding: 100px 24px 60px; }
-    .about-image-accent { right: 0; }
+    .about-image-box { width: 100%; }
+    .values-strip { grid-template-columns: 1fr; }
+    .value-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 40px 24px; }
+    .value-item:last-child { border-bottom: none; }
+    .about-cta { flex-direction: column; text-align: center; padding: 60px 24px; }
     footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 24px; }
     .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
   }
@@ -231,10 +280,38 @@
       <li>Built in the UK, shipped to musicians across Europe.</li>
       <li>Over a decade of experience in custom pedalboard builds.</li>
     </ul>
-    <a href="contact.html" class="btn-primary">Work With Us</a>
+    <a href="contact.html" class="btn-primary">Contact Us</a>
   </div>
 
 </section>
+
+<!-- VALUES STRIP -->
+<div class="values-strip">
+  <div class="value-item">
+    <div class="value-num">10+</div>
+    <div class="value-label">Years of Craft</div>
+    <p class="value-desc">Over a decade building custom pedalboards and wiring solutions for musicians across Europe.</p>
+  </div>
+  <div class="value-item">
+    <div class="value-num">100%</div>
+    <div class="value-label">Handcrafted</div>
+    <p class="value-desc">Every board is built by hand, start to finish. No shortcuts, no assembly lines — just craft.</p>
+  </div>
+  <div class="value-item">
+    <div class="value-num">EU</div>
+    <div class="value-label">Wide Delivery</div>
+    <p class="value-desc">Based in the UK, shipping to musicians all across Europe — wherever your stage is, we'll reach you.</p>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="about-cta">
+  <div class="about-cta-text">
+    <h3>Ready to build your<br><span>dream rig?</span></h3>
+    <p>Tell us about your setup and we'll design something built exactly around how you play.</p>
+  </div>
+  <a href="contact.html" class="btn-primary">Contact Us</a>
+</div>
 
 <!-- FOOTER -->
 <footer>
