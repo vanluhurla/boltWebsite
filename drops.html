@@ -447,6 +447,13 @@
     border: 1.5px solid rgba(255,255,255,0.08); cursor: not-allowed;
   }
   .detail-cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .detail-cta-row { display: flex; gap: 12px; }
+  .detail-cta-row .detail-cta { flex: 1; }
+  .detail-cta.enquire-contact {
+    background: transparent; color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.25);
+  }
+  .detail-cta.enquire-contact:hover { border-color: var(--white); transform: translateY(-2px); }
 
   /* ── FOOTER ── */
   footer {
@@ -518,9 +525,6 @@
 
   <section class="drops-section">
     <div class="drops-meta">
-      <span class="drops-meta-label">
-        <span id="product-count">0</span> boards this drop
-      </span>
       <span class="drop-month-badge">June 2026 Drop</span>
     </div>
     <div class="products-grid" id="products-grid"></div>
@@ -584,10 +588,10 @@
     {
       id: "D26003",
       slug: "drizzle-collection-bolt-board",
-      name: "Black Tolex — Drizzle Collection",
+      name: "Black Tolex",
       collection: "Drizzle Collection",
-      shortDescription: "A handmade black tolex pedalboard with a bold finish, wooden lid, 9V Bolt LED light and clean stage-ready design.",
-      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black tolex and features a wooden lid, a 9V-powered Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. Built in a small batch as part of this month's drop.",
+      shortDescription: "A handmade black tolex pedalboard with a bold finish, wooden lid, 9V Sparkle Bolt LED light and clean stage-ready design.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
       price: "£299 + shipping",
       availability: "Available",
       mainImage: "1.jpg",
@@ -597,7 +601,7 @@
         "11.jpg","12.jpg","13.jpg","14.jpg","15.jpg"
       ],
       specs: [
-        "49cm × 34cm × 9.5cm",
+        "49cm × 34cm × 9.5cm (19.3\" × 13.4\" × 3.7\")",
         "Handmade in the UK",
         "Part of the Drizzle Collection",
         "Ready to ship",
@@ -637,7 +641,6 @@
      RENDER: PRODUCT LIST
   ───────────────────────────────────── */
   function renderList() {
-    document.getElementById('product-count').textContent = drops.length;
     const grid = document.getElementById('products-grid');
     grid.innerHTML = drops.map((p, i) => `
       <article
@@ -765,17 +768,28 @@
         Reserved — contact us for similar builds
       </a>`;
     } else {
-      ctaHTML = `<a class="detail-cta enquire"
-        href="${waURL(p.whatsappMessage)}"
-        target="_blank" rel="noopener noreferrer">
-        Enquire about this board
-      </a>`;
+      ctaHTML = `<div class="detail-cta-row">
+        <a class="detail-cta enquire"
+          href="${waURL(p.whatsappMessage)}"
+          target="_blank" rel="noopener noreferrer">
+          Enquire on WhatsApp
+        </a>
+        <a class="detail-cta enquire-contact"
+          href="contact.html"
+          target="_blank" rel="noopener noreferrer">
+          Enquire via Contact Form
+        </a>
+      </div>`;
     }
 
     const includedHTML = p.included && p.included.length ? `
       <p class="detail-section-label">What's included</p>
       <div class="detail-included">
         <ul>${p.included.map(item => `<li>${item}</li>`).join('')}</ul>
+      </div>
+      <p class="detail-section-label" style="margin-top:20px;">What's not included</p>
+      <div class="detail-included" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03);">
+        <ul><li>Pedals shown in the images</li></ul>
       </div>
     ` : '';
 

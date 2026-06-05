@@ -134,10 +134,14 @@
     animation: fadeUp 0.9s 0.3s ease both;
   }
   .hero-actions {
-    display: flex; gap: 16px; max-width: 460px;
+    display: flex; flex-direction: column; gap: 12px; max-width: 460px;
     animation: fadeUp 0.9s 0.4s ease both;
   }
-  .hero-actions a { flex: 1; text-align: center; }
+  .hero-actions-row {
+    display: flex; gap: 12px;
+  }
+  .hero-actions-row a { flex: 1; text-align: center; }
+  .hero-actions > a { text-align: center; width: 100%; display: block; }
   .btn-primary {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700; font-size: 13px;
@@ -162,6 +166,8 @@
   }
   .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
   .btn-outline-purple:hover { border-color: var(--purple); color: var(--purple); }
+  .btn-outline-gold { border-color: var(--gold); color: var(--gold); }
+  .btn-outline-gold:hover { border-color: var(--gold); color: var(--dark); background: var(--gold); }
   .hero-badge {
     position: absolute; bottom: 48px; right: 48px; z-index: 2;
     display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
@@ -441,6 +447,7 @@
     .hero-content { padding: 0 24px; max-width: 100%; }
     .hero-sub { font-size: 14px; }
     .hero-actions { flex-direction: column; gap: 12px; }
+    .hero-actions-row { flex-direction: column; gap: 12px; }
     .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 14px 20px; }
     .scroll-line { display: none; }
 
@@ -499,8 +506,11 @@
     <p class="hero-sub">Handmade pedalboards, precise wiring setups, and custom cables. Made for musicians who refuse to compromise. From our workshop in the UK to customers across Europe.</p>
     <div class="hero-actions">
       <a href="gallery.html" class="btn-primary">Explore Builds</a>
-      <a href="contact.html" class="btn-outline">Get in Touch</a>
-      <a href="https://wa.me/447397007124" target="_blank" class="btn-outline btn-outline-purple">WhatsApp</a>
+      <a href="drops.html" class="btn-outline btn-outline-gold">Drops</a>
+      <div class="hero-actions-row">
+        <a href="contact.html" class="btn-outline">Get in Touch</a>
+        <a href="https://wa.me/447397007124" target="_blank" class="btn-outline btn-outline-purple">WhatsApp</a>
+      </div>
     </div>
   </div>
 
