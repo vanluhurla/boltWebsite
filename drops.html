@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolt Boards</title>
+<link rel="icon" href="Circle Dark.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: rgb(112, 77, 241);
+    --gold: #ffdf0f;
+    --white: #ffffff;
+    --off-white: #f5f5f3;
+    --dark: #0a0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 68px;
+    background: rgba(10,10,10,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,223,15,0.15);
+  }
+  .nav-logo img { height: 44px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--purple); color: #fff;
+    border: none; padding: 10px 24px; cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: background 0.2s;
+    display: inline-block; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--dark); }
+
+  /* ── SHARED BUTTONS ── */
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--purple); color: #fff;
+    border: none; padding: 11px 24px; cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none; display: inline-block; white-space: nowrap;
+  }
+  .btn-primary:hover { background: #8a63f5; transform: translateY(-2px); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ══════════════════════════════════════
+     VIEW: DROPS LIST
+  ══════════════════════════════════════ */
+  #view-list  { display: block; }
+  #view-detail { display: none; }
+
+  /* DROPS HERO */
+  .drops-hero {
+    padding: 140px 48px 72px;
+    background: var(--dark);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    animation: fadeUp 0.9s ease both;
+  }
+  .drops-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .drops-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 2px; background: var(--gold);
+  }
+  .drops-hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(56px, 8vw, 100px);
+    line-height: 0.93; text-transform: uppercase;
+    color: var(--white); margin-bottom: 20px;
+  }
+  .drops-hero-title em { font-style: normal; color: var(--purple); }
+  .drops-hero-sub {
+    font-size: 16px; font-weight: 300;
+    line-height: 1.75; color: rgba(255,255,255,0.5);
+    max-width: 520px;
+  }
+
+  /* PRODUCTS SECTION */
+  .drops-section { padding: 64px 48px 120px; }
+  .drops-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 48px; padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .drops-meta-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+  .drops-meta-label span { color: var(--gold); }
+  .drop-month-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--dark); background: var(--gold);
+    padding: 5px 14px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  /* PRODUCT GRID */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* PRODUCT CARD */
+  .product-card {
+    background: #111;
+    position: relative;
+    display: flex; flex-direction: column;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 64px rgba(112,77,241,0.18);
+    border-color: rgba(112,77,241,0.3);
+  }
+  .product-card:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--purple), var(--gold));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s; z-index: 1;
+  }
+  .product-card:hover::before { transform: scaleX(1); }
+
+  .card-img-wrap {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+  .card-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.5s ease;
+  }
+  .product-card:hover .card-img-wrap img { transform: scale(1.04); }
+
+  .card-badge {
+    position: absolute; top: 12px; left: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 10px;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+  .badge-available { background: rgba(10,10,10,0.85); color: #4ade80; border: 1px solid rgba(74,222,128,0.4); }
+  .badge-reserved  { background: rgba(10,10,10,0.85); color: var(--gold); border: 1px solid rgba(255,223,15,0.45); }
+  .badge-sold      { background: rgba(10,10,10,0.85); color: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.15); }
+
+  .card-drop-label {
+    position: absolute; top: 12px; right: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    background: var(--purple); color: #fff;
+    padding: 4px 10px;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+
+  .card-body {
+    padding: 24px;
+    flex: 1; display: flex; flex-direction: column;
+  }
+  .card-collection {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--purple); margin-bottom: 8px;
+  }
+  .card-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 20px;
+    text-transform: uppercase; line-height: 1.1;
+    color: var(--white); margin-bottom: 10px;
+  }
+  .card-short-desc {
+    font-size: 13px; font-weight: 300; line-height: 1.7;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px; flex: 1;
+  }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    gap: 12px;
+  }
+  .card-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 22px; color: var(--white);
+    white-space: nowrap;
+  }
+  .card-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--purple); color: #fff;
+    border: none; padding: 9px 18px; cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: background 0.2s; white-space: nowrap;
+    text-decoration: none; display: inline-block;
+  }
+  .card-cta:hover { background: #8a63f5; }
+  .card-cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .card-cta.sold {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.25);
+    cursor: default;
+  }
+
+  /* ══════════════════════════════════════
+     VIEW: PRODUCT DETAIL
+  ══════════════════════════════════════ */
+  .detail-header {
+    padding: 100px 48px 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    animation: fadeUp 0.6s ease both;
+  }
+  .detail-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    background: none; border: none; padding: 0; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .detail-back::before { content: '←'; font-size: 16px; line-height: 1; }
+  .detail-back:hover { color: var(--gold); }
+  .detail-back:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    padding: 56px 48px 100px;
+    align-items: start;
+  }
+
+  /* CAROUSEL */
+  .carousel-wrap { position: sticky; top: 88px; }
+  .carousel-main {
+    position: relative;
+    aspect-ratio: 1/1;
+    background: #1a1a1a;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .carousel-main img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain; display: block;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .carousel-main img.active { opacity: 1; }
+
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(10,10,10,0.72); backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white); width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 2; font-size: 18px; padding: 0;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .carousel-btn:hover { background: var(--purple); border-color: var(--purple); }
+  .carousel-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .carousel-btn-prev { left: 10px; }
+  .carousel-btn-next { right: 10px; }
+
+  .carousel-dots {
+    display: flex; gap: 6px; justify-content: center; margin-bottom: 10px;
+  }
+  .carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .carousel-dot.active { background: var(--gold); transform: scale(1.4); }
+  .carousel-dot:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .carousel-thumbs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .carousel-thumb {
+    aspect-ratio: 1; overflow: hidden;
+    background: #1a1a1a; cursor: pointer;
+    border: 2px solid transparent; padding: 0;
+    opacity: 0.4;
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+  .carousel-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .carousel-thumb.active { border-color: var(--gold); opacity: 1; }
+  .carousel-thumb:hover { opacity: 1; }
+  .carousel-thumb:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* PRODUCT INFO */
+  .detail-collection {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--purple); margin-bottom: 12px;
+  }
+  .detail-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(28px, 3.5vw, 48px);
+    line-height: 1; text-transform: uppercase;
+    color: var(--white); margin-bottom: 20px;
+  }
+  .detail-price-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px; padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+  }
+  .detail-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 34px; color: var(--white);
+  }
+  .detail-avail-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 14px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+  .detail-avail-badge.badge-available {
+    background: rgba(74,222,128,0.1); color: #4ade80;
+    border: 1px solid rgba(74,222,128,0.3);
+  }
+  .detail-avail-badge.badge-reserved {
+    background: rgba(255,223,15,0.08); color: var(--gold);
+    border: 1px solid rgba(255,223,15,0.3);
+  }
+  .detail-avail-badge.badge-sold {
+    background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .detail-desc {
+    font-size: 15px; font-weight: 300; line-height: 1.85;
+    color: rgba(255,255,255,0.5); margin-bottom: 32px;
+  }
+  .detail-section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.25); margin-bottom: 14px;
+  }
+  .detail-specs {
+    list-style: none; display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 32px;
+  }
+  .detail-specs li {
+    font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.6);
+    padding-left: 20px; position: relative; line-height: 1.5;
+  }
+  .detail-specs li::before {
+    content: '';
+    position: absolute; left: 0; top: 8px;
+    width: 8px; height: 2px; background: var(--gold);
+  }
+  .detail-included {
+    background: rgba(112,77,241,0.06);
+    border: 1px solid rgba(112,77,241,0.15);
+    padding: 20px 24px; margin-bottom: 36px;
+  }
+  .detail-included ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .detail-included li {
+    font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.55);
+    padding-left: 22px; position: relative;
+  }
+  .detail-included li::before {
+    content: '✓'; position: absolute; left: 0;
+    color: var(--purple); font-size: 12px; font-weight: 700;
+  }
+
+  .detail-cta {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 14px 28px; cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 14px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+  }
+  .detail-cta.enquire { background: var(--purple); color: #fff; }
+  .detail-cta.enquire:hover { background: #8a63f5; transform: translateY(-2px); }
+  .detail-cta.reserved {
+    background: transparent; color: var(--gold);
+    border: 1.5px solid rgba(255,223,15,0.4);
+  }
+  .detail-cta.reserved:hover { border-color: var(--gold); }
+  .detail-cta.sold-out {
+    background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.22);
+    border: 1.5px solid rgba(255,255,255,0.08); cursor: not-allowed;
+  }
+  .detail-cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060606;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 40px 48px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 20px; text-align: center;
+  }
+  .footer-logo img { height: 36px; width: auto; opacity: 0.8; }
+  .footer-links { display: flex; gap: 28px; list-style: none; justify-content: center; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-icon { width: 14px; height: 14px; display: inline-block; vertical-align: middle; opacity: 0.3; filter: brightness(0) invert(1); transition: opacity 0.2s, filter 0.2s; }
+  .footer-links a:hover .footer-icon { opacity: 1; filter: brightness(0) saturate(100%) invert(88%) sepia(68%) saturate(1000%) hue-rotate(6deg) brightness(103%); }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 16px; height: auto; min-height: 56px; flex-wrap: wrap; gap: 6px; padding-top: 8px; padding-bottom: 8px; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 11px; }
+
+    .drops-hero { padding: 100px 24px 56px; }
+    .drops-section { padding: 40px 24px 80px; }
+    .drops-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .products-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    .detail-header { padding: 88px 24px 28px; }
+    .detail-layout { grid-template-columns: 1fr; gap: 36px; padding: 36px 24px 80px; }
+    .carousel-wrap { position: static; }
+
+    footer { padding: 40px 24px; gap: 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="bolt_logo.png" alt="Bolt Boards"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="drops.html" class="active">Drops</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════
+     VIEW: DROPS LIST
+══════════════════════════════════════ -->
+<div id="view-list">
+
+  <div class="drops-hero">
+    <div class="drops-eyebrow">Monthly Drop</div>
+    <h1 class="drops-hero-title">Drops<em>.</em></h1>
+    <p class="drops-hero-sub">Limited handmade pedalboards released in small batches. Available while they last.</p>
+  </div>
+
+  <section class="drops-section">
+    <div class="drops-meta">
+      <span class="drops-meta-label">
+        <span id="product-count">0</span> boards this drop
+      </span>
+      <span class="drop-month-badge">June 2026 Drop</span>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </section>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     VIEW: PRODUCT DETAIL
+══════════════════════════════════════ -->
+<div id="view-detail">
+
+  <div class="detail-header">
+    <button class="detail-back" id="back-btn" aria-label="Back to Drops list">
+      Back to Drops
+    </button>
+  </div>
+
+  <div class="detail-layout">
+
+    <!-- CAROUSEL -->
+    <div class="carousel-wrap">
+      <div class="carousel-main" id="carousel-main" aria-label="Product images" aria-live="polite">
+        <button class="carousel-btn carousel-btn-prev" id="carousel-prev" aria-label="Previous image">&#8592;</button>
+        <button class="carousel-btn carousel-btn-next" id="carousel-next" aria-label="Next image">&#8594;</button>
+      </div>
+      <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Image navigation"></div>
+      <div class="carousel-thumbs" id="carousel-thumbs"></div>
+    </div>
+
+    <!-- INFO -->
+    <div class="detail-info" id="detail-info"></div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <a href="index.html"><img src="bolt_logo.png" alt="Bolt Boards"></a>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="drops.html">Drops</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="https://www.instagram.com/boltboardsuk/" target="_blank"><img src="instagramIcon.png" alt="Instagram" class="footer-icon"></a></li>
+    <li><a href="https://wa.me/447397007124" target="_blank"><img src="whatsappIcon.png" alt="WhatsApp" class="footer-icon"></a></li>
+  </ul>
+  <div class="footer-copy">&copy; 2026 Bolt Boards. All rights reserved.</div>
+</footer>
+
+<script>
+  /* ─────────────────────────────────────
+     PRODUCT DATA
+     Images live in the folder named "#1".
+     In URLs the # must be encoded as %23.
+  ───────────────────────────────────── */
+  const IMAGE_BASE = '%231/';
+
+  const drops = [
+    {
+      id: "D26003",
+      slug: "drizzle-collection-bolt-board",
+      name: "Black Tolex — Drizzle Collection",
+      collection: "Drizzle Collection",
+      shortDescription: "A handmade black tolex pedalboard with a bold finish, wooden lid, 9V Bolt LED light and clean stage-ready design.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black tolex and features a wooden lid, a 9V-powered Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. Built in a small batch as part of this month's drop.",
+      price: "£299 + shipping",
+      availability: "Available",
+      mainImage: "1.jpg",
+      images: [
+        "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg",
+        "6.jpg","7.jpg","8.jpg","9 .jpg","10.jpg",
+        "11.jpg","12.jpg","13.jpg","14.jpg","15.jpg"
+      ],
+      specs: [
+        "49cm × 34cm × 9.5cm",
+        "Handmade in the UK",
+        "Part of the Drizzle Collection",
+        "Ready to ship",
+        "Custom finish"
+      ],
+      included: [
+        "Pedalboard",
+        "Finished board body",
+        "Installed hardware where applicable",
+        "Case candy"
+      ],
+      whatsappMessage: "Hi, I'm interested in the Black Tolex - Drizzle Collection - Bolt Board from this month's drop. Is it still available?"
+    }
+  ];
+
+  /* ─────────────────────────────────────
+     HELPERS
+  ───────────────────────────────────── */
+  function badgeClass(a) {
+    return a === 'Available' ? 'badge-available'
+         : a === 'Reserved'  ? 'badge-reserved'
+         : 'badge-sold';
+  }
+  function badgeLabel(a) {
+    return a === 'Available' ? '● Available'
+         : a === 'Reserved'  ? '◐ Reserved'
+         : '○ Sold';
+  }
+  function waURL(msg) {
+    return 'https://wa.me/447397007124?text=' + encodeURIComponent(msg);
+  }
+  function imgSrc(filename) {
+    return IMAGE_BASE + filename;
+  }
+
+  /* ─────────────────────────────────────
+     RENDER: PRODUCT LIST
+  ───────────────────────────────────── */
+  function renderList() {
+    document.getElementById('product-count').textContent = drops.length;
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = drops.map((p, i) => `
+      <article
+        class="product-card"
+        tabindex="0"
+        role="button"
+        aria-label="View details for ${p.name}"
+        data-index="${i}"
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showDetail(${i})}"
+      >
+        <div class="card-img-wrap">
+          <img src="${imgSrc(p.mainImage)}" alt="${p.name}" loading="lazy">
+          <span class="card-badge ${badgeClass(p.availability)}">${badgeLabel(p.availability)}</span>
+          <span class="card-drop-label">Limited Drop</span>
+        </div>
+        <div class="card-body">
+          <div class="card-collection">${p.collection}</div>
+          <div class="card-name">${p.name}</div>
+          <p class="card-short-desc">${p.shortDescription}</p>
+          <div class="card-footer">
+            <span class="card-price">${p.price}</span>
+            <button
+              class="card-cta${p.availability === 'Sold' ? ' sold' : ''}"
+              onclick="event.stopPropagation();showDetail(${i})"
+              ${p.availability === 'Sold' ? 'aria-disabled="true"' : ''}
+            >View details</button>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    grid.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('card-cta')) {
+          showDetail(+this.dataset.index);
+        }
+      });
+    });
+  }
+
+  /* ─────────────────────────────────────
+     STATE: CAROUSEL
+  ───────────────────────────────────── */
+  let currentIdx = 0;
+  let currentProduct = null;
+
+  function goTo(index) {
+    const imgs   = document.querySelectorAll('#carousel-main img');
+    const dots   = document.querySelectorAll('.carousel-dot');
+    const thumbs = document.querySelectorAll('.carousel-thumb');
+    const total  = currentProduct.images.length;
+
+    imgs[currentIdx].classList.remove('active');
+    dots[currentIdx].classList.remove('active');
+    thumbs[currentIdx].classList.remove('active');
+
+    currentIdx = ((index % total) + total) % total;
+
+    imgs[currentIdx].classList.add('active');
+    dots[currentIdx].classList.add('active');
+    thumbs[currentIdx].classList.add('active');
+  }
+
+  /* ─────────────────────────────────────
+     RENDER: CAROUSEL
+  ───────────────────────────────────── */
+  function renderCarousel(p) {
+    currentIdx = 0;
+    const mainEl   = document.getElementById('carousel-main');
+    const dotsEl   = document.getElementById('carousel-dots');
+    const thumbsEl = document.getElementById('carousel-thumbs');
+    const prevBtn  = document.getElementById('carousel-prev');
+    const nextBtn  = document.getElementById('carousel-next');
+
+    mainEl.querySelectorAll('img').forEach(img => img.remove());
+
+    p.images.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.src = imgSrc(src);
+      img.alt = `${p.name} — photo ${i + 1}`;
+      if (i === 0) img.classList.add('active');
+      mainEl.insertBefore(img, prevBtn);
+    });
+
+    dotsEl.innerHTML = p.images.map((_, i) =>
+      `<button
+        class="carousel-dot${i === 0 ? ' active' : ''}"
+        aria-label="Go to image ${i + 1}"
+        role="tab"
+        aria-selected="${i === 0}"
+        data-i="${i}"
+      ></button>`
+    ).join('');
+    dotsEl.querySelectorAll('.carousel-dot').forEach(dot =>
+      dot.addEventListener('click', () => goTo(+dot.dataset.i))
+    );
+
+    thumbsEl.innerHTML = p.images.map((src, i) =>
+      `<button
+        class="carousel-thumb${i === 0 ? ' active' : ''}"
+        aria-label="View image ${i + 1}"
+        data-i="${i}"
+      ><img src="${imgSrc(src)}" alt="${p.name} thumbnail ${i + 1}" loading="lazy"></button>`
+    ).join('');
+    thumbsEl.querySelectorAll('.carousel-thumb').forEach(thumb =>
+      thumb.addEventListener('click', () => goTo(+thumb.dataset.i))
+    );
+  }
+
+  /* ─────────────────────────────────────
+     RENDER: DETAIL INFO
+  ───────────────────────────────────── */
+  function renderInfo(p) {
+    const bClass = badgeClass(p.availability);
+    const isSold     = p.availability === 'Sold';
+    const isReserved = p.availability === 'Reserved';
+
+    let ctaHTML;
+    if (isSold) {
+      ctaHTML = `<button class="detail-cta sold-out" disabled aria-disabled="true">Sold Out</button>`;
+    } else if (isReserved) {
+      ctaHTML = `<a class="detail-cta reserved"
+        href="${waURL('Hi, I\'m interested in ' + p.name + ' from this month\'s drop. Is it still available?')}"
+        target="_blank" rel="noopener noreferrer">
+        Reserved — contact us for similar builds
+      </a>`;
+    } else {
+      ctaHTML = `<a class="detail-cta enquire"
+        href="${waURL(p.whatsappMessage)}"
+        target="_blank" rel="noopener noreferrer">
+        Enquire about this board
+      </a>`;
+    }
+
+    const includedHTML = p.included && p.included.length ? `
+      <p class="detail-section-label">What's included</p>
+      <div class="detail-included">
+        <ul>${p.included.map(item => `<li>${item}</li>`).join('')}</ul>
+      </div>
+    ` : '';
+
+    document.getElementById('detail-info').innerHTML = `
+      <div class="detail-collection">${p.collection}</div>
+      <h2 class="detail-name">${p.name}</h2>
+      <div class="detail-price-row">
+        <span class="detail-price">${p.price}</span>
+        <span class="detail-avail-badge ${bClass}">${badgeLabel(p.availability)}</span>
+      </div>
+      <p class="detail-desc">${p.description}</p>
+      <p class="detail-section-label">Specs</p>
+      <ul class="detail-specs">
+        ${p.specs.map(s => `<li>${s}</li>`).join('')}
+      </ul>
+      ${includedHTML}
+      ${ctaHTML}
+    `;
+  }
+
+  /* ─────────────────────────────────────
+     VIEW SWITCHING
+  ───────────────────────────────────── */
+  function showDetail(productIndex) {
+    currentProduct = drops[productIndex];
+    renderCarousel(currentProduct);
+    renderInfo(currentProduct);
+    document.getElementById('view-list').style.display = 'none';
+    document.getElementById('view-detail').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showList() {
+    document.getElementById('view-detail').style.display = 'none';
+    document.getElementById('view-list').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ─────────────────────────────────────
+     INIT
+  ───────────────────────────────────── */
+  document.getElementById('back-btn').addEventListener('click', showList);
+
+  document.getElementById('carousel-prev').addEventListener('click', () => goTo(currentIdx - 1));
+  document.getElementById('carousel-next').addEventListener('click', () => goTo(currentIdx + 1));
+
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('view-detail').style.display === 'block') {
+      if (e.key === 'ArrowLeft')  goTo(currentIdx - 1);
+      if (e.key === 'ArrowRight') goTo(currentIdx + 1);
+    }
+  });
+
+  renderList();
+</script>
+
+</body>
+</html>
