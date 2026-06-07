@@ -481,6 +481,7 @@
   .footer-links a:hover { color: var(--gold); }
   .footer-icon { width: 14px; height: 14px; display: inline-block; vertical-align: middle; opacity: 0.3; filter: brightness(0) invert(1); transition: opacity 0.2s, filter 0.2s; }
   .footer-links a:hover .footer-icon { opacity: 1; filter: brightness(0) saturate(100%) invert(88%) sepia(68%) saturate(1000%) hue-rotate(6deg) brightness(103%); }
+  .footer-social-group { display: flex; gap: 16px; align-items: center; }
   .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
   /* ── MOBILE ── */
@@ -497,6 +498,16 @@
     .detail-header { padding: 88px 24px 28px; }
     .detail-layout { grid-template-columns: 1fr; gap: 36px; padding: 36px 24px 80px; }
     .carousel-wrap { position: static; }
+    .detail-cta-row { flex-direction: column; gap: 10px; }
+    .detail-cta { width: 100%; box-sizing: border-box; white-space: normal; text-align: center; }
+    .detail-name { font-size: clamp(24px, 6vw, 36px); word-break: break-word; }
+    .detail-price { font-size: 26px; }
+    #view-detail { overflow-x: hidden; }
+    .carousel-thumbs { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+    .carousel-dots { display: none; }
+    .detail-info { width: 100%; box-sizing: border-box; overflow-x: hidden; }
+    .detail-desc { word-break: break-word; overflow-wrap: break-word; }
+    .detail-included { width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden; }
 
     footer { padding: 40px 24px; gap: 24px; }
     .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
@@ -579,8 +590,10 @@
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="drops.html">Drops</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="https://www.instagram.com/boltboardsuk/" target="_blank"><img src="instagramIcon.png" alt="Instagram" class="footer-icon"></a></li>
-    <li><a href="https://wa.me/447707774158" target="_blank"><img src="whatsappIcon.png" alt="WhatsApp" class="footer-icon"></a></li>
+    <li class="footer-social-group">
+      <a href="https://www.instagram.com/boltboardsuk/" target="_blank"><img src="instagramIcon.png" alt="Instagram" class="footer-icon"></a>
+      <a href="https://wa.me/447707774158" target="_blank"><img src="whatsappIcon.png" alt="WhatsApp" class="footer-icon"></a>
+    </li>
   </ul>
   <div class="footer-copy">&copy; 2026 Bolt Boards. All rights reserved.</div>
 </footer>
@@ -796,7 +809,7 @@
         <ul>${p.included.map(item => `<li>${item}</li>`).join('')}</ul>
       </div>
       <p class="detail-section-label" style="margin-top:20px;">What's not included</p>
-      <div class="detail-included" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03);">
+      <div class="detail-included detail-included--muted" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03);">
         <ul><li>Pedals shown in the images</li></ul>
       </div>
     ` : '';
