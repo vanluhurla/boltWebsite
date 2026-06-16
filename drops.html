@@ -602,7 +602,7 @@
   /* ─────────────────────────────────────
      PRODUCT DATA
   ───────────────────────────────────── */
-  const IMAGE_BASE = 'drop1/';
+  let IMAGE_BASE = 'drop1/';
 
   const drops = [
     {
@@ -614,6 +614,7 @@
       description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
       price: "£299 + shipping",
       availability: "Available",
+      imageFolder: "drop1",
       mainImage: "1.jpg",
       images: [
         "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg",
@@ -636,6 +637,40 @@
         "Case candy"
       ],
       whatsappMessage: "Hi, I'm interested in the Black Tolex - Drizzle Collection - Bolt Board from this month's drop. Is it still available?"
+    },
+    {
+      id: "D26004",
+      slug: "drizzle-collection-gloss-sparkle",
+      name: "Gloss Sparkle Finish",
+      collection: "Drizzle Collection",
+      shortDescription: "A handmade black gloss pedalboard with metallic glitter finish, wooden lid, 9V Sparkle Bolt LED light and clean stage-ready design.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black gloss finish with metallic glitter and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
+      price: "£299 + shipping",
+      availability: "Available",
+      mainImage: "1.jpg",
+      images: [
+        "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg",
+        "6.jpg","7.jpg","8.jpg","9.jpg","10.jpg",
+        "11.jpg","12.jpg","13.jpg","14.jpg","15.jpg"
+      ],
+      specs: [
+        "Overall size: 49cm × 34cm × 9.5cm (19.3\" × 13.4\" × 3.7\")",
+        "Usable area: 44cm × 29.5cm (17.3\" × 11.6\")",
+        "2.03 kg (4.48 lbs)",
+        "Handmade in the UK",
+        "Part of the Drizzle Collection",
+        "Ready to ship",
+        "Custom finish"
+      ],
+      included: [
+        "Pedalboard",
+        "Finished board body",
+        "Installed hardware where applicable",
+        "Case candy"
+      ],
+      imageFolder: "drop2",
+      whatsappMessage: "Hi, I'm interested in the Gloss Sparkle Finish - Drizzle Collection - Bolt Board from this month's drop. Is it still available?"
+    
     }
   ];
 
@@ -658,6 +693,9 @@
   function imgSrc(filename) {
     return IMAGE_BASE + filename;
   }
+  function setImageBase(product) {
+    IMAGE_BASE = (product.imageFolder || 'drop1') + '/';
+  }
 
   /* ─────────────────────────────────────
      RENDER: PRODUCT LIST
@@ -674,7 +712,7 @@
         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showDetail(${i})}"
       >
         <div class="card-img-wrap">
-          <img src="${imgSrc(p.mainImage)}" alt="${p.name}" loading="lazy">
+          <img src="${(p.imageFolder || 'drop1') + '/' + p.mainImage}" alt="${p.name}" loading="lazy">
           <span class="card-badge ${badgeClass(p.availability)}">${badgeLabel(p.availability)}</span>
           <span class="card-drop-label">Limited Drop</span>
         </div>
@@ -837,6 +875,7 @@
   ───────────────────────────────────── */
   function showDetail(productIndex) {
     currentProduct = drops[productIndex];
+    setImageBase(currentProduct);
     renderCarousel(currentProduct);
     renderInfo(currentProduct);
     document.getElementById('view-list').style.display = 'none';
