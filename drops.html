@@ -543,9 +543,16 @@
 
   <section class="drops-section">
     <div class="drops-meta">
+      <span class="drop-month-badge">July 2026 Drop</span>
+    </div>
+    <div class="products-grid" id="products-grid-july"></div>
+  </section>
+
+  <section class="drops-section" style="padding-top:0;">
+    <div class="drops-meta">
       <span class="drop-month-badge">June 2026 Drop</span>
     </div>
-    <div class="products-grid" id="products-grid"></div>
+    <div class="products-grid" id="products-grid-june"></div>
   </section>
 
 </div>
@@ -614,6 +621,7 @@
       description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
       price: "£299 + shipping",
       availability: "Available",
+      month: "june",
       imageFolder: "drop1",
       mainImage: "1.jpg",
       images: [
@@ -668,9 +676,42 @@
         "Installed hardware where applicable",
         "Case candy"
       ],
+      month: "june",
       imageFolder: "drop2",
       whatsappMessage: "Hi, I'm interested in the Gloss Sparkle Finish - Drizzle Collection - Bolt Board from this month's drop. Is it still available?"
-    
+    },
+    {
+      id: "D26005",
+      slug: "drizzle-collection-burgundy-tolex",
+      name: "Burgundy Tolex",
+      collection: "Drizzle Collection",
+      shortDescription: "A handmade burgundy tolex pedalboard with a rich, deep finish, wooden lid, 9V Sparkle Bolt LED light and clean stage-ready design.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in burgundy tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
+      price: "£299 + shipping",
+      availability: "Available",
+      mainImage: "1.jpg",
+      images: [
+        "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg",
+        "6.jpg","7.jpg","8.jpg","9.jpg","10.jpg",
+        "11.jpg","12.jpg","13.jpg","14.jpg","15.jpg"
+      ],
+      specs: [
+        "Overall size: 49cm × 34cm × 9.5cm (19.3\" × 13.4\" × 3.7\")",
+        "Usable area: 44cm × 29.5cm (17.3\" × 11.6\")",
+        "Handmade in the UK",
+        "Part of the Drizzle Collection",
+        "Ready to ship",
+        "Custom finish"
+      ],
+      included: [
+        "Pedalboard",
+        "Finished board body",
+        "Installed hardware where applicable",
+        "Case candy"
+      ],
+      month: "july",
+      imageFolder: "drop3",
+      whatsappMessage: "Hi, I'm interested in the Burgundy Tolex - Drizzle Collection - Bolt Board from this month's drop. Is it still available?"
     }
   ];
 
@@ -700,9 +741,8 @@
   /* ─────────────────────────────────────
      RENDER: PRODUCT LIST
   ───────────────────────────────────── */
-  function renderList() {
-    const grid = document.getElementById('products-grid');
-    grid.innerHTML = drops.map((p, i) => `
+  function cardHTML(p, i) {
+    return `
       <article
         class="product-card"
         tabindex="0"
@@ -730,9 +770,17 @@
           </div>
         </div>
       </article>
-    `).join('');
+    `;
+  }
 
-    grid.querySelectorAll('.product-card').forEach(card => {
+  function renderList() {
+    const julyGrid = document.getElementById('products-grid-july');
+    const juneGrid = document.getElementById('products-grid-june');
+
+    julyGrid.innerHTML = drops.filter(p => p.month === 'july').map((p) => cardHTML(p, drops.indexOf(p))).join('');
+    juneGrid.innerHTML  = drops.filter(p => p.month === 'june').map((p) => cardHTML(p, drops.indexOf(p))).join('');
+
+    document.querySelectorAll('.product-card').forEach(card => {
       card.addEventListener('click', function(e) {
         if (!e.target.classList.contains('card-cta')) {
           showDetail(+this.dataset.index);
