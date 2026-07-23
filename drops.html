@@ -430,6 +430,9 @@
     content: '✓'; position: absolute; left: 0;
     color: var(--purple); font-size: 12px; font-weight: 700;
   }
+  .detail-excluded li::before {
+    content: '✕'; color: #f87171;
+  }
 
   .detail-cta {
     display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -618,7 +621,7 @@
       name: "Black Tolex",
       collection: "Drizzle Collection",
       shortDescription: "A handmade black tolex pedalboard with a bold finish, wooden lid, 9V Sparkle Bolt LED light and clean stage-ready design.",
-      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build, only one available as part of this month's drop.",
       price: "£299 + shipping",
       availability: "Available",
       month: "june",
@@ -652,7 +655,7 @@
       name: "Gloss Sparkle Finish",
       collection: "Drizzle Collection",
       shortDescription: "A handmade black gloss pedalboard with metallic glitter finish, wooden lid, 9V Sparkle Bolt LED light and clean stage-ready design.",
-      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black gloss finish with metallic glitter and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in black gloss finish with metallic glitter and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build, only one available as part of this month's drop.",
       price: "£299 + shipping",
       availability: "Available",
       mainImage: "1.jpg",
@@ -686,7 +689,7 @@
       name: "Burgundy Tolex",
       collection: "Drizzle Collection",
       shortDescription: "A handmade burgundy tolex pedalboard with a rich, deep finish, wooden lid, 9V Sparkle Bolt LED light and clean stage-ready design.",
-      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in burgundy tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build — only one available as part of this month's drop.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. This board is finished in burgundy tolex and features a wooden lid, a 9V-powered Sparkle Bolt LED light, locking 6.35mm TRS panel mount connectors, and an IEC C14 power inlet module with LED rocker switch and fuse. This is a one-of-a-kind build, only one available as part of this month's drop.",
       price: "£299 + shipping",
       availability: "Available",
       mainImage: "1.jpg",
@@ -897,7 +900,7 @@
       </div>
       <p class="detail-section-label" style="margin-top:20px;">What's not included</p>
       <div class="detail-included detail-included--muted" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03);">
-        <ul><li>Pedals shown in the images</li></ul>
+        <ul class="detail-excluded"><li>Pedals shown in the images</li></ul>
       </div>
     ` : '';
 
