@@ -546,6 +546,13 @@
 
   <section class="drops-section">
     <div class="drops-meta">
+      <span class="drop-month-badge">August 2026 Drop</span>
+    </div>
+    <div class="products-grid" id="products-grid-august"></div>
+  </section>
+
+  <section class="drops-section" style="padding-top:0;">
+    <div class="drops-meta">
       <span class="drop-month-badge">July 2026 Drop</span>
     </div>
     <div class="products-grid" id="products-grid-july"></div>
@@ -716,6 +723,40 @@
       month: "july",
       imageFolder: "drop3",
       whatsappMessage: "Hi, I'm interested in the Burgundy Tolex - Drizzle Collection - Bolt Board from this month's drop. Is it still available?"
+    },
+    {
+      id: 4,
+      slug: "royal-blue-tolex",
+      name: "Royal Blue Tolex",
+      collection: "Drizzle Collection",
+      shortDescription: "A handmade Bolt Board dressed in Royal Blue Tolex — bold, clean and built to last.",
+      description: "A handmade Bolt Board designed for players who want a clean, reliable and visually striking setup. Finished in Royal Blue Tolex as part of the Drizzle Collection, this board combines handcrafted quality with a standout look. Please note: there is a small mark on the front of the frame, which is visible in the last image. Priced to reflect this.",
+      price: "£199 + shipping",
+      availability: "Available",
+      mainImage: "1.jpg",
+      images: ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg","11.jpg","12.jpg","13.jpg","14.jpg","15.jpg","16.jpg"],
+      specs: [
+        "Overall size: 49cm × 34.5cm × 9.5cm (19.3\" × 13.6\" × 3.7\")",
+        "Usable area: 44.5cm × 30.0cm (17.5\" × 11.8\")",
+        "2.09 kg (4.61 lbs)",
+        "Handmade in the UK",
+        "Part of the Drizzle Collection",
+        "Ready to ship",
+        "Custom finish"
+      ],
+      included: [
+        "Pedalboard",
+        "Finished board body",
+        "Sparkle Bolt LED light",
+        "Installed hardware where applicable",
+        "Case candy"
+      ],
+      notIncluded: [
+        "Pedals shown in images"
+      ],
+      month: "august",
+      imageFolder: "drop4",
+      whatsappMessage: "Hi, I'm interested in the Royal Blue Tolex - Drizzle Collection - Bolt Board from this month's drop. Is it still available?"
     }
   ];
 
@@ -778,11 +819,13 @@
   }
 
   function renderList() {
-    const julyGrid = document.getElementById('products-grid-july');
-    const juneGrid = document.getElementById('products-grid-june');
+    const augustGrid = document.getElementById('products-grid-august');
+    const julyGrid   = document.getElementById('products-grid-july');
+    const juneGrid   = document.getElementById('products-grid-june');
 
-    julyGrid.innerHTML = drops.filter(p => p.month === 'july').map((p) => cardHTML(p, drops.indexOf(p))).join('');
-    juneGrid.innerHTML  = drops.filter(p => p.month === 'june').map((p) => cardHTML(p, drops.indexOf(p))).join('');
+    augustGrid.innerHTML = drops.filter(p => p.month === 'august').map((p) => cardHTML(p, drops.indexOf(p))).join('');
+    julyGrid.innerHTML   = drops.filter(p => p.month === 'july').map((p) => cardHTML(p, drops.indexOf(p))).join('');
+    juneGrid.innerHTML   = drops.filter(p => p.month === 'june').map((p) => cardHTML(p, drops.indexOf(p))).join('');
 
     document.querySelectorAll('.product-card').forEach(card => {
       card.addEventListener('click', function(e) {
